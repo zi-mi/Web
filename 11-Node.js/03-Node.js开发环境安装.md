@@ -6,6 +6,15 @@ publish: true
 <ArticleTopAd></ArticleTopAd>
 
 
+## Node.js 版本常识
+
+- 偶数版本为稳定版（0.6.x ，8.10.x）
+
+- 奇数版本为非稳定版（0.7.x ，9.11.x）
+
+- LTS（Long Term Support）
+
+参考链接：[node.js 中 LTS 和 Current 的区别](https://blog.csdn.net/u012532033/article/details/73332099)
 
 ## Node.js 运行环境配置：通过 Node.js 安装包（不推荐）
 
@@ -33,15 +42,7 @@ publish: true
 
 因此，我们暂时先不用安装 Node.js，稍后用 NVM 的方式来安装 Node.js。通过 NVM 的方式，可以让多个版本的 Node.js 共存，并灵活切换。
 
-### Node.js 版本常识
 
--   偶数版本为稳定版（0.6.x ，0.8.x ，8.10.x）
-
--   奇数版本为非稳定版（0.7.x ，0.9.x ，9.11.x）
-
--   LTS（Long Term Support）
-
-参考链接：[node.js 中 LTS 和 Current 的区别](https://blog.csdn.net/u012532033/article/details/73332099)
 
 ## Node.js 运行环境安装：通过 NVM（推荐）
 
@@ -134,31 +135,33 @@ npm_mirror: https://npm.taobao.org/mirrors/npm/
 
 ### Mac 系统安装 Node.js
 
-**1、安装 NVM**：
+**1、安装 [NVM](https://github.com/nvm-sh/nvm)**：
 
 （1）打开 终端.app，输入：
 
 ```bash
-curl -o- https://raw.githubusercontent.com/creationix/nvm/v0.33.8/install.sh | bash
+curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.1/install.sh | bash
 ```
 
 安装成功的界面：
 
 ![](http://img.smyhvae.com/20180302_2126.png)
 
-完成后，nvm 就被安装在了`~/.nvm`下。
+完成后，nvm 就被安装在了`~/.nvm`下。我们可以点开 home目录，然后按快捷键「Cmd + Shift + .」，看看 `.nvm`这个文件夹在不在。
 
-如果发现安装失败：
+问题1、如果安装时提示 `Failed to connect to raw.githubusercontent.com port 443: Connection refused`。解决办法：我们直接访问 https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.1/install.sh ，将安装文件保存到本地，然后`bash install.sh` 执行这个本地文件，即可安装成功。
+
+问题2、如果发现安装失败：
 
 ![](http://img.smyhvae.com/20180302_2111.png)
 
-原因：Xcode 软件进行过更新。
+原因：Xcode 软件进行过更新。解决办法：打开 Xcode 软件，同意相关内容即可。
 
-解决办法：打开 Xcode 软件，同意相关内容即可。
+
 
 （2）配置环境变量：
 
-编辑器打开`~/.bash_profile`文件，如果不会就输入`open ~/.bash_profile`。
+编辑器打开`~/.bash_profile`文件，如果不会就在命令行输入`open ~/.bash_profile`。
 
 （补充：如果你的 Mac 电脑里找不到`~/.bash_profile`文件，那就找找有没有`~/.profile`文件，或者`~/.bashrc`文件，或者`~/.zshrc`文件。如果还是没有，那你就手动创建一个`~/.bash_profile`文件）。
 
@@ -177,9 +180,13 @@ PS：NVM 现在已经不支持 Homebrew 的方式来安装了。
 
 参考链接：<https://www.jianshu.com/p/a3f8778bc0a1>
 
+
+
+参考链接：<https://blog.csdn.net/science_Lee/article/details/79214127>
+
 **2、验证：**(在 终端命令行中输入命令)
 
-（1）输入 `nvm` 命令查看环境变量是否配置成功：
+（1）输入 `nvm` 命令查看环境变量是否配置成功。
 
 （2）输入 `nvm ls`，查看已安装的所有 node 版本。
 
@@ -195,7 +202,7 @@ PS：NVM 现在已经不支持 Homebrew 的方式来安装了。
 nvm install 版本号
 
 # 举例
-nvm install 8.10.0
+nvm install 12.18.0
 ```
 
 网速有点慢，要稍等。
@@ -207,6 +214,18 @@ nvm install 8.10.0
 安装好 `Node` 之后，`npm` 也会自动安装的，输入 `npm -v`，查看 npm 的版本。
 
 关于 NVM 的常用命令，详见下一段。
+
+**4、让 `.bash_profile` 环境变量永久生效**：
+
+在 `~/.bash_profile` 中配置好环境变量后，发现每次重启终端后，配置都会失效，需要重新执行 `source ~/.bash_profile` 命令。
+
+原因是，zsh加载的是 `~/.zshrc`文件，而 `.zshrc` 文件中并没有定义任务环境变量。
+
+解决办法：打开 `~/.zshrc` 文件，在文件的末尾，添加如下内容即可：
+
+```bash
+source ~/.bash_profile
+```
 
 ## NVM 的常用命令
 
@@ -388,6 +407,23 @@ NPM 默认安装到当前正在使用 Node 版本所在目录下。我们建议�
 输入`npm config ls`，查看：
 
 ![](http://img.smyhvae.com/20180302_1210.png)
+
+### NPM包的版本管理
+
+NPM包的管理都是通过项目根目录的 `package.json`文件实现。
+
+当你使用 npm 安装一个包或者更新一个包的时候，package.json 里会自动添加**包名和包的版本**。npm 默认安装**符合条件**的最新版本，然后在版本号之前添加`^`符号。
+
+NPM包的版本号，是用三位数表示。版本号前面的符号，代表开发者想要更新的的最新版本条件：
+
+- 符号`^`：固定第一位数。表示主版本固定的情况下，可更新至最新版。例如 `vue: "^2.6.0"` 表示 2.6.0及其以上的2.x.x 都是满足的。
+- 符号`~`：固定前两位数。表示次版本固定的情况下，可更新至最新版。例如 `vuex: "~2.6.0"`，2.6.0及其以上的2.6.x都是满足的。
+- 无符号：三位数都固定。无符号表示固定版本号。例如 `vue: "2.6.0"`，此时一定是安装`2.6.0`版本。
+
+参考链接：
+
+- [请将你的npm依赖版本锁定](https://juejin.cn/post/6960928446826741796)
+
 
 ## NPM 的常用命令
 
@@ -616,10 +652,8 @@ cnpm install vue
 
 就可以执行这个 js 程序，直接在命令行查看运行结果。
 
-## 我的公众号
+## 赞赏作者
 
-想学习**更多技能**？不妨关注我的微信公众号：**千古壹号**（id：`qianguyihao`）。
+创作不易，你的赞赏和认可，是我更新的最大动力：
 
-扫一扫，你将发现另一个全新的世界，而这将是一场美丽的意外：
-
-![](https://img.smyhvae.com/20200102.png)
+![](https://img.smyhvae.com/20220401_1800.jpg)

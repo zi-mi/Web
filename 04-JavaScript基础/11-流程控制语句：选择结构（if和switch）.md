@@ -1,6 +1,5 @@
 ---
 title: 11-流程控制语句：选择结构（if和switch）
-publish: true
 ---
 
 <ArticleTopAd></ArticleTopAd>
@@ -30,7 +29,7 @@ a = 2
 
 ## 流程控制语句
 
-在一个程序执行的过程中，各条语句的执行顺序对程序的结果是有直接影响的。所以，我们必须清楚每条语句的执行流程。而且，很多时候我们要通过控制语句的执行顺序来实现我们要完成的功能。
+在一个程序执行的过程中，各条语句的执行顺序对程序的结果是有直接影响的。所以，我们必须清楚每条语句的执行流程。而且，很多时候我们要通过控制语句的执行顺序来实现我们想要的业务逻辑和功能。
 
 ### 流程控制语句分类
 
@@ -114,10 +113,10 @@ BMI =体重÷身高的平方
 
 ```javascript
 //第一步，输入身高和体重
-var height = parseFloat(prompt('请输入身高，单位是米'));
-var weight = parseFloat(prompt('请输入体重，单位是公斤'));
+const height = parseFloat(prompt('请输入身高，单位是米'));
+const weight = parseFloat(prompt('请输入体重，单位是公斤'));
 //第二步，计算BMI指数
-var BMI = weight / Math.pow(height, 2);
+const BMI = weight / Math.pow(height, 2);
 //第三步，if语句来判断
 if (BMI < 18.5) {
     alert('偏瘦');
@@ -136,10 +135,10 @@ if (BMI < 18.5) {
 
 ```javascript
 //第一步，输入身高和体重
-var height = parseFloat(prompt('请输入身高，单位是米'));
-var weight = parseFloat(prompt('请输入体重，单位是公斤'));
+const height = parseFloat(prompt('请输入身高，单位是米'));
+const weight = parseFloat(prompt('请输入体重，单位是公斤'));
 //第二步，计算BMI指数
-var BMI = weight / Math.pow(height, 2);
+const BMI = weight / Math.pow(height, 2);
 //第三步，if语句来判断
 if (BMI > 32) {
     alert('非常肥胖');
@@ -171,23 +170,23 @@ if (BMI > 32) {
 
 ```javascript
 //第一步，输入
-var bianhao = parseInt(prompt('您想加什么油？填写92或者97'));
-var sheng = parseFloat(prompt('您想加多少升？'));
+const bianhao = parseInt(prompt('您想加什么油？填写92或者97'));
+const sheng = parseFloat(prompt('您想加多少升？'));
 
 //第二步，判断
 if (bianhao == 92) {
     //编号是92的时候做的事情
     if (sheng >= 20) {
-        var price = sheng * 5.9;
+        const price = sheng * 5.9;
     } else {
-        var price = sheng * 6;
+        const price = sheng * 6;
     }
 } else if (bianhao == 97) {
     //编号是97的时候做的事情
     if (sheng >= 30) {
-        var price = sheng * 6.95;
+        const price = sheng * 6.95;
     } else {
-        var price = sheng * 7;
+        const price = sheng * 7;
     }
 } else {
     alert('不好意思，没有这个编号的汽油！');
@@ -235,24 +234,20 @@ switch(表达式) {
 
 （2）然后，如果所有的 case 都和表达式的值不匹配，就会执行 default 语句体部分。
 
-default不一定要写在最后面。 switch 中的 default 无论放到什么位置, 都会等到所有case 都不匹配再执行。default 也可以省略。
-
 ### switch 语句的结束条件【非常重要】
 
 -   情况 a：遇到 break 就结束（而不是遇到 default 就结束）。因为 break 在此处的作用是，立即结束并退出整个 switch 语句。
 -   情况 b：执行到程序的末尾就结束。
 
-
-
 我们稍后讲 case穿透的时候，你就会明白其中的奥妙了。
 
-### switch 和 case 后面的值
+### 注意点
 
-switch 后面的括号里可以是变量、常量、表达式， 通常是一个**变量**（一般的做法是：先把表达式存放到变量中）。
+1、switch 后面的括号里可以是变量、常量、表达式， 通常是一个**变量**（一般做法是：先把表达式存放到变量中）。
 
-case 后面的`值1`、`值2`可以是变量、常量、表达式。
+case 后面的值可以是变量、常量、表达式。
 
-注意，**case的判断逻辑是`===`，不是`==`**。因此，字符串`'6'`和 数字 `6` 是不一样的。
+2、**case的判断逻辑是`===`，不是`==`**。因此，字符串`'6'`和 数字 `6` 是不一样的。
 
 举例 1：
 
@@ -296,7 +291,9 @@ switch (true) {
 }
 ```
 
-代码解释：由于 switch 里的值是 true，所以，在众多的 case 语句中，会去匹配第一个符合 `case true`的语句，然后命中这条语句。
+上方代码解释：由于 switch 里的值是 true，所以，在众多的 case 语句中，会去匹配第一个符合 `case true`的语句，然后命中这条语句。
+
+3、default不一定要写在最后面。 switch 中的 default 无论放到什么位置，都会等到所有case 都不匹配再执行。default 也可以省略。
 
 ### case 穿透
 
@@ -352,7 +349,7 @@ switch (num) {
 
 ```javascript
 //switch判断语句
-var number = 5;
+const number = 5;
 
 switch (number) {
     default:
@@ -599,11 +596,11 @@ switch (day) {
 
 ### if 和 switch如何选择
 
-如果是对区间进行判断，则建议用 if。如果是对几个固定的值的判断，那么，数量少的话用 if，数量多的话用switch。
+如果是对区间进行判断，则建议用 if。如果是对几个固定的值进行判断，那么，数量少的话用 if，数量多的话用switch。
 
 ### 用 return 代替 if else
 
-业务场景：
+业务场景举例：
 
 我们在实战业务中涉及到调接口时，一般会这样做：
 
@@ -646,10 +643,8 @@ resolve(res);
 
 备注：如果你没学过 Promise，这个例子可以先不看。等以后学了 Promise 再回来看就很容易明白了。
 
-## 我的公众号
+## 赞赏作者
 
-想学习**更多技能**？不妨关注我的微信公众号：**千古壹号**。
+创作不易，你的赞赏和认可，是我更新的最大动力：
 
-扫一扫，你将发现另一个全新的世界，而这将是一场美丽的意外：
-
-![](https://img.smyhvae.com/20200102.png)
+![](https://img.smyhvae.com/20220401_1800.jpg)
